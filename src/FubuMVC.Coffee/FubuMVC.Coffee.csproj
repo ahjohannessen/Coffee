@@ -35,7 +35,7 @@
       <HintPath>..\..\lib\Fubu\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="CoffeeSharp">
-      <HintPath>packages\CoffeeSharp.0.3\lib\CoffeeSharp.dll</HintPath>
+      <HintPath>..\packages\CoffeeSharp.0.3\lib\CoffeeSharp.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\..\lib\Fubu\FubuCore.dll</HintPath>
@@ -44,7 +44,7 @@
       <HintPath>..\..\lib\Fubu\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="Jurassic">
-      <HintPath>packages\CoffeeSharp.0.3\lib\Jurassic.dll</HintPath>
+      <HintPath>..\packages\CoffeeSharp.0.3\lib\Jurassic.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
