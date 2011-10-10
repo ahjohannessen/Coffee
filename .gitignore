@@ -52,5 +52,4 @@ packaging/release
 output
 output/*
 *.dotCover
-src/packages
 repositories.config
