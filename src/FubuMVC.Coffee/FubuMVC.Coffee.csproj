@@ -56,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoffeeExtension.cs" />
+    <Compile Include="CoffeeSharpEngine.cs" />
     <Compile Include="CoffeeTransformer.cs" />
+    <Compile Include="ICoffee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
