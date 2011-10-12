@@ -1,4 +1,4 @@
-﻿using CoffeeSharp;
+﻿using Coffee;
 using FubuMVC.Core;
 using FubuMVC.Core.Assets.Content;
 
@@ -13,9 +13,7 @@ namespace FubuMVC.Coffee
             
             registry.Services(s =>
             {
-                s.SetServiceIfNone(new CoffeeScriptEngine());
                 s.SetServiceIfNone<ICoffee, CoffeeSharpEngine>();
-
                 s.AddService<ITransformerPolicy>(coffeePolicy);
             });
         }

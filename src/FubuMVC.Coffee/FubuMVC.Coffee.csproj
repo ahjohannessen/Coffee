@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{DAE6855B-73F7-412A-A1A4-10CFCFDA4B5C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FubuMVC.Coffee</RootNamespace>
     <AssemblyName>FubuMVC.Coffee</AssemblyName>
@@ -37,17 +37,11 @@
     <Reference Include="Bottles">
       <HintPath>..\..\lib\Fubu\Bottles.dll</HintPath>
     </Reference>
-    <Reference Include="CoffeeSharp">
-      <HintPath>..\packages\CoffeeSharp.0.3\lib\CoffeeSharp.dll</HintPath>
-    </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\..\lib\Fubu\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
       <HintPath>..\..\lib\Fubu\FubuMVC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Jurassic">
-      <HintPath>..\packages\CoffeeSharp.0.3\lib\Jurassic.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,20 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\CLIRunner.cs" />
     <Compile Include="CoffeeExtension.cs" />
-    <Compile Include="CoffeeSharpEngine.cs" />
     <Compile Include="CoffeeTransformer.cs" />
-    <Compile Include="ICoffee.cs" />
-    <Compile Include="Command\IProcessRunner.cs" />
-    <Compile Include="Command\ProcessReturn.cs" />
-    <Compile Include="Command\ProcessRunner.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />
-    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Coffee\Coffee.csproj">
+      <Project>{7CDCB0EF-29BB-4159-BF55-2894213CF11C}</Project>
+      <Name>Coffee</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
