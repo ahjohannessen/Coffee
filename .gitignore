@@ -53,3 +53,4 @@ output
 output/*
 *.dotCover
 repositories.config
+!src/Coffee/tools/bin
