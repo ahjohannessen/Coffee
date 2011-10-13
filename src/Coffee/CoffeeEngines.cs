@@ -1,4 +1,5 @@
 using CoffeeSharp;
+using SassAndCoffee.Core.Compilers;
 
 namespace Coffee
 {
@@ -18,6 +19,29 @@ namespace Coffee
         public string Compile(string code)
         {
             return _engine.Compile(code);
+        }
+    }
+
+    public class SassCoffeeEngine : ICoffee
+    {
+        private readonly CoffeeScriptCompiler _coffeeScriptCompiler;
+
+        public SassCoffeeEngine(CoffeeScriptCompiler coffeeScriptCompiler)
+        {
+            _coffeeScriptCompiler = coffeeScriptCompiler;
+        }
+
+        public string Compile(string code)
+        {
+            return _coffeeScriptCompiler.Compile(code);
+        }
+    }
+
+    public class RealCoffee : ICoffee
+    {
+        public string Compile(string code)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
