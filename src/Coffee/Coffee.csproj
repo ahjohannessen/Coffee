@@ -76,7 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoffeeEngines.cs" />
+    <Compile Include="CoffeeCompiler.cs" />
     <Compile Include="Command\NodeRunner.cs" />
     <Compile Include="Command\IProcessRunner.cs" />
     <Compile Include="Command\ProcessReturn.cs" />
@@ -142,9 +142,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\tools\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

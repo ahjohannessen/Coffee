@@ -21,7 +21,7 @@ namespace Coffee
         // Temp 
         public static void ExtractTools()
         {
-            var assembly = typeof (ICoffee).Assembly;
+            var assembly = typeof (ICoffeeCompiler).Assembly;
             const string toolsName = "tools";
             var embeddedPrefix = "Coffee.{0}".ToFormat(toolsName);
 
