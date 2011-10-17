@@ -76,13 +76,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoffeeCompiler.cs" />
-    <Compile Include="Command\NodeRunner.cs" />
-    <Compile Include="Command\IProcessRunner.cs" />
-    <Compile Include="Command\ProcessReturn.cs" />
-    <Compile Include="Command\ProcessRunner.cs" />
+    <Compile Include="CoffeeEngine.cs" />
+    <Compile Include="CoffeeRequest.cs" />
+    <Compile Include="CoffeeResult.cs" />
+    <Compile Include="CoffeeRunner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.cs" />
+    <Compile Include="RunFiles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
