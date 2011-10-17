@@ -32,7 +32,7 @@ namespace Coffee
 
             if(_runner.Run(request).Success)
             {
-                coffeeResult.TransformedCode = files.ReadJavascript();
+                coffeeResult.TransformedCode = files.ReadJavaScript();
                 coffeeResult.Success = true;
             }
             else

@@ -14,25 +14,26 @@ namespace Coffee
     public class CoffeeRunner : ICoffeeRunner
     {
         private readonly string _coffeeCmd;
-        
-        public CoffeeRunner() : this(FileSystem.Combine(AppDomain.CurrentDomain.BaseDirectory, "tools", "coffee.cmd")) {}
-        public CoffeeRunner(string coffeeCmd)
+        private readonly string _tools = FileSystem.Combine(AppDomain.CurrentDomain.BaseDirectory, Resources.ToolsName);
+
+        public CoffeeRunner()
         {
-            _coffeeCmd = coffeeCmd;
+            var cmd = "coffee.{0}".ToFormat(Platform.IsUnix() ? "sh" : "cmd");
+            _coffeeCmd = _tools.AppendPath(cmd);
         }
 
         public RunResult Run(CoffeeRequest request)
         {
-            using (var process = startCoffee(_coffeeCmd, buildArgs(request)))
+            using (var process = startCoffee(buildArgs(request)))
             {
                 process.WaitForExit();
                 return new RunResult(process.ExitCode);
             }
         }
 
-        private static Process startCoffee(string cmd, params string[] args)
+        private Process startCoffee(params string[] args)
         {            
-            var startInfo = new ProcessStartInfo(cmd)
+            var startInfo = new ProcessStartInfo(_coffeeCmd)
             {
                 Arguments = args.Join(" "),
                 WindowStyle = ProcessWindowStyle.Hidden,
@@ -54,11 +55,16 @@ namespace Coffee
             }
 
             args.Append(" ");
-            args.Append(files.CoffeeScript);
+            args.Append(FileEscape(files.CoffeeScript));
             args.Append(" ");
-            args.Append(files.Error);
+            args.Append(FileEscape(files.Error));
 
             return args.ToString();
+        }
+		
+		public static string FileEscape(string file)
+        {	 	
+			return "\"{0}\"".ToFormat(file);	
         }
     }
 
@@ -73,6 +79,16 @@ namespace Coffee
         public bool Success
         {
             get { return _exitCode == 0; }
+        }
+    }
+
+
+    public class Platform
+    {
+        public static bool IsUnix()
+        {
+            var pf = Environment.OSVersion.Platform;
+            return pf == PlatformID.Unix || pf == PlatformID.MacOSX;
         }
     }
 }

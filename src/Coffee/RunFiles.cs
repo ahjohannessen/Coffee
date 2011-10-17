@@ -1,5 +1,6 @@
 using System.IO;
 using FubuCore;
+using System;
 
 namespace Coffee
 {
@@ -12,7 +13,7 @@ namespace Coffee
         public RunFiles(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
-            _uniqueName = FileSystem.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            _uniqueName = FileSystem.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("n"));
 
             CoffeeScript = getFileName("coffee");
             JavaScript = getFileName("js");
@@ -33,7 +34,7 @@ namespace Coffee
             _fileSystem.WriteStringToFile(CoffeeScript, code);
         }
 
-        public string ReadJavascript()
+        public string ReadJavaScript()
         {
             return _fileSystem.ReadStringFromFile(JavaScript);
         }
