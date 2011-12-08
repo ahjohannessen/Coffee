@@ -1,5 +1,5 @@
 (function() {
-  var Lexer, RESERVED, compile, fs, lexer, parser, path, _ref;
+  var Lexer, RESERVED, compile, fs, lexer, parser, path, vm, _ref;
   var __hasProp = Object.prototype.hasOwnProperty;
 
   fs = require('fs');
@@ -9,6 +9,8 @@
   _ref = require('./lexer'), Lexer = _ref.Lexer, RESERVED = _ref.RESERVED;
 
   parser = require('./parser').parser;
+
+  vm = require('vm');
 
   if (require.extensions) {
     require.extensions['.coffee'] = function(module, filename) {
@@ -24,7 +26,7 @@
     });
   }
 
-  exports.VERSION = '1.1.3-pre';
+  exports.VERSION = '1.1.3';
 
   exports.RESERVED = RESERVED;
 
@@ -55,14 +57,11 @@
   };
 
   exports.run = function(code, options) {
-    var Module, mainModule;
+    var mainModule;
     mainModule = require.main;
     mainModule.filename = process.argv[1] = options.filename ? fs.realpathSync(options.filename) : '.';
     mainModule.moduleCache && (mainModule.moduleCache = {});
-    if (process.binding('natives').module) {
-      Module = require('module').Module;
-      mainModule.paths = Module._nodeModulePaths(path.dirname(options.filename));
-    }
+    mainModule.paths = require('module')._nodeModulePaths(path.dirname(options.filename));
     if (path.extname(mainModule.filename) !== '.coffee' || require.extensions) {
       return mainModule._compile(compile(code, options), mainModule.filename);
     } else {
@@ -74,14 +73,13 @@
     var Module, Script, js, k, o, r, sandbox, v, _i, _len, _module, _ref2, _ref3, _require;
     if (options == null) options = {};
     if (!(code = code.trim())) return;
-    Script = require('vm').Script;
+    Script = vm.Script;
     if (Script) {
-      sandbox = Script.createContext();
-      sandbox.global = sandbox.root = sandbox.GLOBAL = sandbox;
       if (options.sandbox != null) {
-        if (options.sandbox instanceof sandbox.constructor) {
+        if (options.sandbox instanceof Script.createContext().constructor) {
           sandbox = options.sandbox;
         } else {
+          sandbox = Script.createContext();
           _ref2 = options.sandbox;
           for (k in _ref2) {
             if (!__hasProp.call(_ref2, k)) continue;
@@ -89,14 +87,17 @@
             sandbox[k] = v;
           }
         }
+        sandbox.global = sandbox.root = sandbox.GLOBAL = sandbox;
+      } else {
+        sandbox = global;
       }
       sandbox.__filename = options.filename || 'eval';
       sandbox.__dirname = path.dirname(sandbox.__filename);
-      if (!(sandbox.module || sandbox.require)) {
+      if (!(sandbox !== global || sandbox.module || sandbox.require)) {
         Module = require('module');
         sandbox.module = _module = new Module(options.modulename || 'eval');
         sandbox.require = _require = function(path) {
-          return Module._load(path, _module);
+          return Module._load(path, _module, true);
         };
         _module.filename = sandbox.__filename;
         _ref3 = Object.getOwnPropertyNames(require);
@@ -118,10 +119,10 @@
     }
     o.bare = true;
     js = compile(code, o);
-    if (Script) {
-      return Script.runInContext(js, sandbox);
+    if (sandbox === global) {
+      return vm.runInThisContext(js);
     } else {
-      return eval(js);
+      return vm.runInContext(js, sandbox);
     }
   };
 

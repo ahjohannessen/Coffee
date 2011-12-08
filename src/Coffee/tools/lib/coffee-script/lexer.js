@@ -107,11 +107,15 @@
     };
 
     Lexer.prototype.numberToken = function() {
-      var match, number;
+      var binaryLiteral, lexedLength, match, number;
       if (!(match = NUMBER.exec(this.chunk))) return 0;
       number = match[0];
+      lexedLength = number.length;
+      if (binaryLiteral = /0b([01]+)/.exec(number)) {
+        number = (parseInt(binaryLiteral[1], 2)).toString();
+      }
       this.token('NUMBER', number);
-      return number.length;
+      return lexedLength;
     };
 
     Lexer.prototype.stringToken = function() {
@@ -620,7 +624,7 @@
 
   IDENTIFIER = /^([$A-Za-z_\x7f-\uffff][$\w\x7f-\uffff]*)([^\n\S]*:(?!:))?/;
 
-  NUMBER = /^0x[\da-f]+|^\d*\.?\d+(?:e[+-]?\d+)?/i;
+  NUMBER = /^0x[\da-f]+|^0b[01]+|^\d*\.?\d+(?:e[+-]?\d+)?/i;
 
   HEREDOC = /^("""|''')([\s\S]*?)(?:\n[^\n\S]*)?\1/;
 
